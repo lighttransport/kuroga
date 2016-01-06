@@ -9,7 +9,7 @@ install:
 
 before_build:
   - cd example
-  - python ..\kuroga.py config.py
+  - python ..\kuroga.py config-msvc.py
   - cd ..
 
 build_script:
