@@ -48,7 +48,7 @@ link_pool_depth  : Link pool depth(default = 4)
 
 ### Add your toolchain
 
-define `register_toolchain` function in `input.py`
+define `register_toolchain` function in `config.py`
 
 ### More customization
 
