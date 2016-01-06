@@ -37,6 +37,26 @@ def add_gnu_rule(ninja):
     ninja.variable('gnuar', 'ar')
     ninja.newline()
 
+# msvc preset
+def add_msvc_rule(ninja):
+    ninja.rule('msvccxx', description='CXX $out',
+        command='$msvccxx /TP /showIncludes $msvcdefines $msvcincludes $msvccxxflags -c $in /Fo$out',
+        depfile='$out.d', deps='msvc')
+    ninja.rule('msvccc', description='CC $out',
+        command='$msvccc /TC /showIncludes $msvcdefines $msvcincludes $msvccflags -c $in /Fo$out',
+        depfile='$out.d', deps='msvc')
+    ninja.rule('msvclink', description='LINK $out', pool='link_pool',
+        command='$msvcld $msvcldflags $in $libs /OUT:$out')
+    ninja.rule('msvcar', description='AR $out', pool='link_pool',
+        command='$msvcar $in /OUT:$out')
+    #ninja.rule('msvcstamp', description='STAMP $out', command='touch $out')
+    ninja.newline()
+
+    ninja.variable('msvccxx', 'cl.exe')
+    ninja.variable('msvccc', 'cl.exe')
+    ninja.variable('msvcld', 'link.exe')
+    ninja.variable('msvcar', 'lib.exe')
+    ninja.newline()
 
 # -- from ninja_syntax.py --
 def escape_path(word):
@@ -202,8 +222,9 @@ def gen(ninja, toolchain, config):
         ninja.pool('link_pool', depth=4)
     ninja.newline()
 
-    # Add default gnu template
+    # Add default toolchain(gnu and msvc)
     add_gnu_rule(ninja)
+    add_msvc_rule(ninja)
 
     obj_files = []
 

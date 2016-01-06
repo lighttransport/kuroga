@@ -1,8 +1,9 @@
-exe = "myprog"
+exe = "myprog.exe"
 #staticlib = "libmylib.a"
 
-# "gnu" is a predefined toolchain
+# "gnu" or "msvc" are provided as predefined toolchain
 toolchain = "gnu"
+#toolchain = "msvc"
 
 # optional
 link_pool_depth = 1
@@ -10,30 +11,35 @@ link_pool_depth = 1
 # reuired
 includes = {
     "gnu" : [ "-I." ]
+  , "msvc" : [ "/I." ]
   , "clang" : [ "-I." ]
     }
 
 # reuired
 defines = {
     "gnu" : [ "-DEXAMPLE=1" ]
+  , "msvc" : [ "/DEXAMPLE=1" ]
   , "clang" : [ "-DEXAMPLE=1" ]
     }
 
 # reuired
 cflags = {
     "gnu" : [ "-O2", "-g" ]
+  , "msvc" : [ "/O2" ]
   , "clang" : [ "-O2", "-g" ]
     }
 
 # reuired
 cxxflags = {
     "gnu" : [ "-O2", "-g" ]
+  , "msvc" : [ "/O2" ]
   , "clang" : [ "-O2", "-g", "-fsanitize=address" ]
     }
 
 # reuired
 ldflags = {
     "gnu" : [ ]
+  , "msvc" : [ ]
   , "clang" : [ "-fsanitize=address" ]
     }
 
