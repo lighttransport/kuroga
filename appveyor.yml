@@ -1,0 +1,17 @@
+version: 0.9.{build}
+
+os: Visual Studio 2015
+
+install:
+  - call "C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/vcvarsall.bat"
+  - set PATH=C:/Sys/bin;C:/tools/ninja;%PATH%
+  - cinst ninja
+
+before_build:
+  - cd example
+  - python ..\kuroga.py config.py
+  - cd ..
+
+build:
+  - cd example
+  - ninja -v
