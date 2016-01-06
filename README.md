@@ -1,5 +1,7 @@
 # Kuroga
 
+[![Build status](https://ci.appveyor.com/api/projects/status/03l0fxl54vjp2ck6?svg=true)](https://ci.appveyor.com/project/syoyo/kuroga)
+
 Kuroga is simple and single file meta build system for C/C++ application.
 Kuroga generates ninja(https://ninja-build.org) script from portable python script.
 
