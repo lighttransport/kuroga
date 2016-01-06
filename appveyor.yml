@@ -12,6 +12,6 @@ before_build:
   - python ..\kuroga.py config.py
   - cd ..
 
-build:
+build_script:
   - cd example
   - ninja -v
