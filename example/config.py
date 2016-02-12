@@ -8,6 +8,13 @@ toolchain = "gnu"
 # optional
 link_pool_depth = 1
 
+# optional
+builddir = {
+    "gnu" :  "build"
+  , "msvc" :  "build"
+  , "clang" :  "build"
+    }
+
 # reuired
 includes = {
     "gnu" : [ "-I." ]

@@ -209,6 +209,12 @@ def gen(ninja, toolchain, config):
     ninja.variable('ninja_required_version', '1.4')
     ninja.newline()
 
+    if hasattr(config, "builddir"):
+        builddir = config.builddir[toolchain]
+        ninja.variable(toolchain + 'builddir', builddir)
+    else:
+        builddir = ''
+
     ninja.variable(toolchain + 'defines', config.defines[toolchain] or [])
     ninja.variable(toolchain + 'includes', config.includes[toolchain] or [])
     ninja.variable(toolchain + 'cflags', config.cflags[toolchain] or [])
@@ -237,6 +243,7 @@ def gen(ninja, toolchain, config):
         for src in config.cxx_files:
             srcfile = src
             obj = os.path.splitext(srcfile)[0] + '.o'
+            obj = os.path.join(builddir, obj);
             obj_files.append(obj)
             ninja.build(obj, cxx, srcfile)
         ninja.newline()
@@ -245,6 +252,7 @@ def gen(ninja, toolchain, config):
         for src in config.c_files:
             srcfile = src
             obj = os.path.splitext(srcfile)[0] + '.o'
+            obj = os.path.join(builddir, obj);
             obj_files.append(obj)
             ninja.build(obj, cc, srcfile)
         ninja.newline()
