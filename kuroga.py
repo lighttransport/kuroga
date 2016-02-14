@@ -25,7 +25,7 @@ def add_gnu_rule(ninja):
         command='$gnucc -MMD -MF $out.d $gnudefines $gnuincludes $gnucflags -c $in -o $out',
         depfile='$out.d', deps='gcc')
     ninja.rule('gnulink', description='LINK $out', pool='link_pool',
-        command='$gnuld $gnuldflags -o $out $in $libs')
+        command='$gnuld -o $out $in $libs $gnuldflags')
     ninja.rule('gnuar', description='AR $out', pool='link_pool',
         command='$gnuar rsc $out $in')
     ninja.rule('gnustamp', description='STAMP $out', command='touch $out')
