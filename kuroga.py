@@ -37,6 +37,27 @@ def add_gnu_rule(ninja):
     ninja.variable('gnuar', 'ar')
     ninja.newline()
 
+# clang preset
+def add_clang_rule(ninja):
+    ninja.rule('clangcxx', description='CXX $out',
+        command='$clangcxx -MMD -MF $out.d $clangdefines $clangincludes $clangcxxflags -c $in -o $out',
+        depfile='$out.d', deps='gcc')
+    ninja.rule('clangcc', description='CC $out',
+        command='$clangcc -MMD -MF $out.d $clangdefines $clangincludes $clangcflags -c $in -o $out',
+        depfile='$out.d', deps='gcc')
+    ninja.rule('clanglink', description='LINK $out', pool='link_pool',
+        command='$clangld -o $out $in $libs $gnuldflags')
+    ninja.rule('clangar', description='AR $out', pool='link_pool',
+        command='$clangar rsc $out $in')
+    ninja.rule('clangstamp', description='STAMP $out', command='touch $out')
+    ninja.newline()
+
+    ninja.variable('clangcxx', 'clang++')
+    ninja.variable('clangcc', 'clang')
+    ninja.variable('clangld', '$clangcxx')
+    ninja.variable('clangar', 'ar')
+    ninja.newline()
+
 # msvc preset
 def add_msvc_rule(ninja):
     ninja.rule('msvccxx', description='CXX $out',
@@ -228,8 +249,9 @@ def gen(ninja, toolchain, config):
         ninja.pool('link_pool', depth=4)
     ninja.newline()
 
-    # Add default toolchain(gnu and msvc)
+    # Add default toolchain(gnu, clang and msvc)
     add_gnu_rule(ninja)
+    add_clang_rule(ninja)
     add_msvc_rule(ninja)
 
     obj_files = []

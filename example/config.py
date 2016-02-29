@@ -1,7 +1,7 @@
 exe = "myprog.exe"
 #staticlib = "libmylib.a"
 
-# "gnu" or "msvc" are provided as predefined toolchain
+# "gnu", "clang", and "msvc" are provided as predefined toolchain
 toolchain = "gnu"
 #toolchain = "msvc"
 
@@ -15,35 +15,37 @@ builddir = {
   , "clang" :  "build"
     }
 
-# reuired
+# required
 includes = {
     "gnu" : [ "-I." ]
   , "msvc" : [ "/I." ]
   , "clang" : [ "-I." ]
     }
 
-# reuired
+# required
 defines = {
     "gnu" : [ "-DEXAMPLE=1" ]
   , "msvc" : [ "/DEXAMPLE=1" ]
   , "clang" : [ "-DEXAMPLE=1" ]
     }
 
-# reuired
+# required
 cflags = {
+    # https://stackoverflow.com/questions/5088460/flags-to-enable-thorough-and-verbose-g-warnings/9862800
     "gnu" : [ "-O2", "-g" ]
   , "msvc" : [ "/O2" ]
   , "clang" : [ "-O2", "-g" ]
     }
 
-# reuired
+# required
+# Warn as much as possible: http://qiita.com/MitsutakaTakeda/items/6b9966f890cc9b944d75
 cxxflags = {
-    "gnu" : [ "-O2", "-g" ]
-  , "msvc" : [ "/O2" ]
-  , "clang" : [ "-O2", "-g", "-fsanitize=address" ]
+    "gnu" : [ "-O2", "-g", "-pedantic -Wall -Wextra -Wcast-align -Wcast-qual -Wctor-dtor-privacy -Wdisabled-optimization -Wformat=2 -Winit-self -Wmissing-declarations -Wmissing-include-dirs -Wold-style-cast -Woverloaded-virtual -Wredundant-decls -Wshadow -Wsign-conversion -Wsign-promo -Wstrict-overflow=5 -Wswitch-default -Wundef -Werror -Wno-unused" ]
+  , "msvc" : [ "/O2", "/W4" ]
+  , "clang" : [ "-O2", "-g", "-Werror -Weverything -Wno-c++98-compat -Wno-c++98-compat-pedantic" ]
     }
 
-# reuired
+# required
 ldflags = {
     "gnu" : [ ]
   , "msvc" : [ ]
@@ -57,24 +59,4 @@ c_files = [ "add.c" ]
 # You can register your own toolchain through register_toolchain function
 def register_toolchain(ninja):
     pass
-
-    #ninja.rule('clangcxx', description='CXX $out',
-    #    command='$clangcxx -MMD -MF $out.d $clangdefines $clangincludes $clangcxxflags -c $in -o $out',
-    #    depfile='$out.d', deps='gcc')
-    #ninja.rule('clangcc', description='CC $out',
-    #    command='$clangcc -MMD -MF $out.d $clangdefines $clangincludes $clangcflags -c $in -o $out',
-    #    depfile='$out.d', deps='gcc')
-    #ninja.rule('clanglink', description='LINK $out', pool='link_pool',
-    #    command='$clangld $clangldflags -o $out $in $libs')
-    #ninja.rule('clangar', description='AR $out', pool='link_pool',
-    #    command='$clangar rsc $out $in')
-    #ninja.rule('clangstamp', description='STAMP $out', command='touch $out')
-    #ninja.newline()
-
-    #ninja.variable('clangcxx', 'clang++')
-    #ninja.variable('clangcc', 'clang')
-    #ninja.variable('clangld', 'clang++')
-    #ninja.variable('clangar', 'ar')
-    #ninja.newline()
-
 
