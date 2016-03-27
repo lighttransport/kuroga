@@ -46,7 +46,7 @@ def add_clang_rule(ninja):
         command='$clangcc -MMD -MF $out.d $clangdefines $clangincludes $clangcflags -c $in -o $out',
         depfile='$out.d', deps='gcc')
     ninja.rule('clanglink', description='LINK $out', pool='link_pool',
-        command='$clangld -o $out $in $libs $gnuldflags')
+        command='$clangld -o $out $in $libs $clangldflags')
     ninja.rule('clangar', description='AR $out', pool='link_pool',
         command='$clangar rsc $out $in')
     ninja.rule('clangstamp', description='STAMP $out', command='touch $out')
