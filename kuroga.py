@@ -4,12 +4,12 @@
 # Kuroga, single python file meta-build system for ninja
 # https://github.com/lighttransport/kuroga
 #
-# Requirements: python 2.6 or 2.7
+# Requirements: python 3.6 or later(2.7 may work)
 #
 # Usage: $ python kuroga.py input.py
 #
 
-import imp
+import importlib
 import re
 import textwrap
 import glob
@@ -226,7 +226,7 @@ def as_list(input):
 # -- end from ninja_syntax.py --
 
 def gen(ninja, toolchain, config):
-    
+
     ninja.variable('ninja_required_version', '1.4')
     ninja.newline()
 
@@ -260,7 +260,7 @@ def gen(ninja, toolchain, config):
     cxx = toolchain + 'cxx'
     link = toolchain + 'link'
     ar = toolchain + 'ar'
-    
+
     if hasattr(config, "cxx_files"):
         for src in config.cxx_files:
             srcfile = src
@@ -290,7 +290,7 @@ def gen(ninja, toolchain, config):
 
     ninja.build('all', 'phony', targetlist)
     ninja.newline()
-        
+
     ninja.default('all')
 
 def main():
@@ -298,14 +298,14 @@ def main():
         print("Usage: python kuroga.py config.py")
         sys.exit(1)
 
-    config = imp.load_source("config", sys.argv[1])
+    config = importlib.import_module("config", sys.argv[1])
 
     f = open('build.ninja', 'w')
     ninja = Writer(f)
 
     if hasattr(config, "register_toolchain"):
         config.register_toolchain(ninja)
-        
+
     gen(ninja, config.toolchain, config)
     f.close()
 

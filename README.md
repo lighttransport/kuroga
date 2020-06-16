@@ -8,13 +8,18 @@ Kuroga generates ninja(https://ninja-build.org) script from portable python scri
 ## Requirements
 
 * ninja 1.4+
-* Python 2.6 or 2.7
+* Python 3.6+
+  * python 2.7 may work
 
 ## Supported platform
 
 * [x] Linux
 * [x] MacOSX
-* [ ] Windows(Visual Studio)
+* [ ] Windows
+  * [ ] clang-cl
+  * [ ] llvm-mingw(clang)
+  * [ ] MinGW gcc
+  * [ ] MSVC(Visual Studio)
 
 ## Install
 
@@ -61,6 +66,7 @@ Simply edit `kuroga.py` as you wish ;-)
 * [ ] Subdirectory
 * [ ] Android
 * [ ] MSCV(Windows)
+* [ ] Cross-compiling
 * [ ] Support complex build dependencies
 * [ ] Support subninja
 
