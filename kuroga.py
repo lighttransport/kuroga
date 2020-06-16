@@ -298,7 +298,8 @@ def main():
         print("Usage: python kuroga.py config.py")
         sys.exit(1)
 
-    config = importlib.import_module("config", sys.argv[1])
+    # Assume argv[1] has file extension(.py)
+    config = importlib.import_module(os.path.splitext(sys.argv[1])[0])
 
     f = open('build.ninja', 'w')
     ninja = Writer(f)
